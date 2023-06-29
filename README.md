@@ -1,5 +1,5 @@
-# Tic-Tac-Toe Game which nobody is unaware of !!
-
+# Tic-Tac-Toe Game
+-> If you are unaware of the rules of this game, you belong to mars
 -> Used HTML CSS Javascript and JQuery in making this game 
 -> Not uploaded on the server 
 -> Two players will be playing 
