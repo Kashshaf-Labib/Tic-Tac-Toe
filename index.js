@@ -15,6 +15,8 @@ var winningCombos = [
     [2, 4, 6]
 ];
 
+var turnCount = 0;
+
 
 const O_text = 'O';
 
@@ -44,34 +46,41 @@ function startGame() {
 
 function boxClicked(e) {
     const id = e.target.id;
-    if (!spaces[id]) {
-        spaces[id] = currentPlayer;
-        e.target.innerText = currentPlayer;
-        if (playerHasWon() !== false) {
-            $("#playerText").text(currentPlayer + " has won");
-            var winning_blocks = playerHasWon();
-            for (var i = 0; i < winning_blocks.length; i++) {
-                $("#" + winning_blocks[i]).addClass("winningBlocks");
+    if (turnCount < 9) {
+        turnCount++;
+        if (!spaces[id]) {
+            spaces[id] = currentPlayer;
+            e.target.innerText = currentPlayer;
+            if (playerHasWon() !== false) {
+                $("#playerText").text(currentPlayer + " has won");
+                var winning_blocks = playerHasWon();
+                for (var i = 0; i < winning_blocks.length; i++) {
+                    $("#" + winning_blocks[i]).addClass("winningBlocks");
+                }
+                return;
             }
-            return;
-        }
 
 
-        if (currentPlayer == O_text) {
-            currentPlayer = X_text;
-            $("#playerText").text("X's turn");
+            if (currentPlayer == O_text) {
+                currentPlayer = X_text;
+                $("#playerText").text("X's turn");
+            }
+            else {
+                currentPlayer = O_text;
+                $("#playerText").text("O's turn");
+            }
         }
-        else {
-            currentPlayer = O_text;
-            $("#playerText").text("O's turn");
+        if (turnCount == 9) {
+            $("#playerText").text("Match Drawn, Press restart to play again.");
         }
     }
+
 }
-startGame();
 
 $("#restartBtn").on("click", restartGame);
 
 function restartGame() {
+    turnCount = 0;
     spaces.fill(null);
     for (var i = 0; i < boxes.length; i++) {
         boxes[i].innerText = '';
@@ -80,6 +89,8 @@ function restartGame() {
     currentPlayer = X_text;
     $("#playerText").text("X's turn");
 }
+
+startGame();
 
 
 
